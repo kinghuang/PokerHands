@@ -1,0 +1,76 @@
+/*var Card = function(cardString) {
+  this.rank = cardString[0];
+  this.suit = cardString[1];
+ }*/
+
+var poker = {
+  // Returns the name of the input hand.
+  // See the specs for the required formats.
+
+  labelHand: function(hand) {
+
+  	var cards = hand.split(' ').map(function(cardString) {
+
+  		var rankNumber;
+  		switch(cardString[1]) {
+  			case 'K':
+  				rankNumber = 13;
+  				break;
+  			case 'Q':
+  				rankNumber = 12;
+  				break;
+  			case 'J':
+  				rankNumber = 11;
+  				break;
+  			case 'T':
+  				rankNumber = 10;
+  				break;
+  			default:
+  				rankNumber = parseInt(cardString[1])
+  				break;
+  		}
+
+  		return {'rank': cardString[0], 'suit': cardString[1], 'rankNumber': rankNumber};
+  	});
+  },
+
+  detectFlush: function(cards) {
+  	var suit = cards[0]['suit'];
+	for( var i = 1; i < cards.length; i++) {
+  		if (cards[i]['suit'] != suit) {
+  			return false;
+  		}
+  	}
+  	return true;
+  },
+
+ detectHighestNumber: function(cards) {
+  	var rank = cards[0]['rankNumber'];
+  	for( var i = 1; i < cards.length; i++) {
+  		if (cards[i]['rankNumber'] != rank) {
+  			return false;
+  		}
+  	} 
+  	return rank;
+  },
+
+  detectHighestSame: function(cards, n) {
+  	var ranks = {};
+  	cards.forEach(function(card) {
+  		ranks[cards['rankNumber']] = ranks[cards['rankNumber']] + 1 || 1;
+  	});
+
+  	var bestRank = 0;
+  	ranks.forEach(function(rank) {
+  		if(rank == n && rank > bestRank) {
+  			bestRank = rank;
+  		}
+  	});
+
+  	if(bestRank > 0) {
+  		return bestRank;
+  	}
+  	return false;
+  },
+};
+
